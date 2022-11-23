@@ -1,7 +1,21 @@
 ﻿@page "/"
+@inject IMercadoPagoService _mercadoPagoService
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<a href="@_mercadoPagoUrl" style="display: block;">Pay with Mercado Pago</a>
+
+@code {
+
+    private string _mercadoPagoUrl = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        _mercadoPagoUrl = await _mercadoPagoService.GenerateMercadoPagoLink();
+    }
+
+}
