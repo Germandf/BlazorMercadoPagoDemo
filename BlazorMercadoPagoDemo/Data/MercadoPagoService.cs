@@ -20,24 +20,26 @@ public class MercadoPagoService : IMercadoPagoService
                 Title = "Invoice",
                 Quantity = 1,
                 CurrencyId = "ARS",
-                UnitPrice = 500
+                UnitPrice = 3000
             },
-        };
-        preferenceRequest.BackUrls = new PreferenceBackUrlsRequest()
-        {
-            Success = $"localhost:7218/?status=success",
-            Failure = $"localhost:7218/?status=failure",
-            Pending = $"localhost:7218/?status=pending"
         };
         preferenceRequest.PaymentMethods = new PreferencePaymentMethodsRequest()
         {
             Installments = 1
         };
+        /*
+        preferenceRequest.BackUrls = new PreferenceBackUrlsRequest()
+        {
+            Success = $"https://example.com/success",
+            Failure = $"https://example.com/failure",
+            Pending = $"https://example.com/pending"
+        };
         preferenceRequest.AutoReturn = "approved";
-        preferenceRequest.NotificationUrl = $"localhost:7218/api/notifications";
+        preferenceRequest.NotificationUrl = $"https://example.com/api/notifications";
+        */
         preferenceRequest.Expires = true;
         preferenceRequest.ExpirationDateTo = DateTime.Now.AddDays(1);
-
+        preferenceRequest.StatementDescriptor = "Company Name";
         var preferenceClient = new PreferenceClient();
         var preference = await preferenceClient.CreateAsync(preferenceRequest);
         return preference.InitPoint;
